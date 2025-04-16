@@ -1,16 +1,18 @@
-import { Form } from 'react-router-dom';
+import { Form, useParams } from 'react-router-dom';
 
-type Contact = {
+export type Contact = {
   first: string;
   last: string;
   avatar: string;
   twitter: string;
   notes: string;
   favorite: boolean;
-  id: string;
+  id?: string;
 };
 
 export default function Contact() {
+  const params = useParams<{ contactId: string }>();
+
   const contact = {
     first: 'Your',
     last: 'Name',
@@ -18,8 +20,8 @@ export default function Contact() {
     twitter: 'your_handle',
     notes: 'Some notes',
     favorite: true,
-    id: '1',
   };
+
   return (
     <div id="contact">
       <div>
@@ -27,7 +29,7 @@ export default function Contact() {
           key={contact.avatar}
           src={
             contact.avatar ||
-            `https://robohash.org/${contact.id}.png?size=200x200`
+            `https://robohash.org/${params.contactId}.png?size=200x200`
           }
         />
       </div>

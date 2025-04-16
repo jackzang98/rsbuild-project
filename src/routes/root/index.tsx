@@ -1,4 +1,10 @@
+import { Link, Outlet, useLoaderData } from 'react-router-dom';
+import type { Contact as ContactType } from '../contact';
+
 export default function Root() {
+  const contacts = useLoaderData() as ContactType[];
+  console.log('Root', contacts);
+
   return (
     <>
       <div id="sidebar">
@@ -19,18 +25,32 @@ export default function Root() {
             <button type="submit">New</button>
           </form>
         </div>
-        <nav>
+        {contacts.length ? (
           <ul>
-            <li>
-              <a href={`/contacts/1`}>Your Name</a>
-            </li>
-            <li>
-              <a href={`/contacts/2`}>Your Friend</a>
-            </li>
+            {contacts.map((contact) => (
+              <li key={contact.id}>
+                <Link to={`contacts/${contact.id}`}>
+                  {contact.first || contact.last ? (
+                    <>
+                      {contact.first} {contact.last}
+                    </>
+                  ) : (
+                    <i>No Name</i>
+                  )}
+                  {contact.favorite && <span>★</span>}
+                </Link>
+              </li>
+            ))}
           </ul>
-        </nav>
+        ) : (
+          <p>
+            <i>No contacts</i>
+          </p>
+        )}
       </div>
-      <div id="detail"></div>
+      <div id="detail">
+        <Outlet></Outlet>
+      </div>
     </>
   );
 }

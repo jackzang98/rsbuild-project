@@ -34,4 +34,9 @@ export default defineConfig({
       }
     },
   },
+  dev: {
+    client: {
+      overlay: false,
+    },
+  },
 });
