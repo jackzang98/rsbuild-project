@@ -1,30 +1,22 @@
 import { Link, Outlet, useLoaderData } from 'react-router-dom';
 import type { Contact as ContactType } from '../contact';
+import { Button, Divider, Form, Input } from 'antd';
 
 export default function Root() {
   const contacts = useLoaderData() as ContactType[];
-  console.log('Root', contacts);
 
   return (
-    <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-        <div>
-          <form id="search-form" role="search">
-            <input
-              id="q"
-              aria-label="Search contacts"
-              placeholder="Search"
-              type="search"
-              name="q"
-            />
-            <div id="search-spinner" aria-hidden hidden={true} />
-            <div className="sr-only" aria-live="polite"></div>
-          </form>
-          <form method="post">
-            <button type="submit">New</button>
-          </form>
-        </div>
+    <div className="flex h-full">
+      <div className="w-1/4 bg-[#f7f7f7] pl-4 pr-4 pt-4">
+        <Form layout="inline">
+          <Form.Item>
+            <Input placeholder="Search" className="w-3/4" type="search"></Input>
+          </Form.Item>
+          <Form.Item name="search">
+            <Button type="primary">New</Button>
+          </Form.Item>
+        </Form>
+        <Divider />
         {contacts.length ? (
           <ul>
             {contacts.map((contact) => (
@@ -48,9 +40,9 @@ export default function Root() {
           </p>
         )}
       </div>
-      <div id="detail">
+      <div className="w-3/4">
         <Outlet></Outlet>
       </div>
-    </>
+    </div>
   );
 }
